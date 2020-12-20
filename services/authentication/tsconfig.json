@@ -4,7 +4,8 @@
     "moduleResolution": "node",
     "outDir": "dist",
     "sourceMap": true,
-    "target": "ESNext"
+    "target": "ESNext",
+    "resolveJsonModule": true
   },
   "include": [
     "src/**/*"
