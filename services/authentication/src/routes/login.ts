@@ -2,6 +2,7 @@ import { Context, Next } from 'koa'
 import { createAccessToken, createRefreshToken } from '../shared/jwt-tokens'
 import comparePasswords from '../shared/compare-passwords'
 import userClient from '../clients/user'
+import RefreshToken from '../models/refresh-token'
 
 export default async function login(ctx: Context, next: Next) {
   // TODO: Check if login is enabled
@@ -11,7 +12,7 @@ export default async function login(ctx: Context, next: Next) {
   const password = ctx.request.body.password?.trim()
 
   if ((!username && !email) || !password) {
-    ctx.response.status = 401
+    ctx.response.status = 400
     return next()
   }
 
@@ -29,7 +30,11 @@ export default async function login(ctx: Context, next: Next) {
     const accessToken = createAccessToken(payload)
     const refreshToken = createRefreshToken(payload)
 
-    // TODO: Save refresh token to database
+    await RefreshToken.query().insert({
+      user_id: user.id,
+      token: refreshToken,
+      user_agent: ctx.headers['user-agent']
+    })
 
     ctx.response.body = {
       accessToken,

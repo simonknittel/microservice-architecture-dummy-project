@@ -1,6 +1,6 @@
 import * as Knex from 'knex'
 import { Model } from 'objection'
-import knexfile from './knexfile'
+import * as knexfile from './knexfile.js'
 
 const knex = Knex(knexfile)
 

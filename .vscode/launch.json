@@ -15,8 +15,7 @@
       "preLaunchTask": "tsc: build - services/authentication/tsconfig.json",
       "outFiles": [
         "${workspaceFolder}/services/authentication/dist/**/*.js"
-      ],
-      "envFile": "${workspaceFolder}/services/authentication/src/.env"
+      ]
     }
   ]
 }

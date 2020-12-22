@@ -1,17 +1,18 @@
 import * as jwt from 'jsonwebtoken'
+import config from '../config'
 
 export function createAccessToken(payload: object) {
-  return jwt.sign(payload, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_ACCESS_TOKEN_LIFETIME
+  return jwt.sign(payload, config.get('jwtSecret'), {
+    expiresIn: config.get('jwtAccessTokenLifetime')
   })
 }
 
 export function createRefreshToken(payload: object) {
-  return jwt.sign(payload, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_REFRESH_TOKEN_LIFETIME
+  return jwt.sign(payload, config.get('jwtSecret'), {
+    expiresIn: config.get('jwtRefreshTokenLifetime')
   })
 }
 
 export function verifyToken(token: string) {
-  return jwt.verify(token, process.env.JWT_SECRET)
+  return jwt.verify(token, config.get('jwtSecret'))
 }

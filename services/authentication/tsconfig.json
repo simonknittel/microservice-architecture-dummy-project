@@ -5,7 +5,8 @@
     "outDir": "dist",
     "sourceMap": true,
     "target": "ESNext",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "allowJs": true
   },
   "include": [
     "src/**/*"

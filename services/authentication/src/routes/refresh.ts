@@ -1,4 +1,5 @@
 import { Context, Next } from 'koa';
+import RefreshToken from '../models/refresh-token';
 import { verifyToken } from '../shared/jwt-tokens';
 
 export default async function refresh(ctx: Context, next: Next) {
@@ -15,8 +16,13 @@ export default async function refresh(ctx: Context, next: Next) {
 
     // TODO: Check if refresh token is still valid (compare with database)
     // TODO: Create access token
-    // TODO: Delete old refresh token from database
+
+    await RefreshToken.query()
+      .delete()
+      .where('token', refreshToken)
+
     // TODO: Create new refresh token
+    // TODO: Save new refresh token to database
     ctx.response.body = {}
   } catch (error) {
     ctx.response.status = 401 // TODO: Correct code?
