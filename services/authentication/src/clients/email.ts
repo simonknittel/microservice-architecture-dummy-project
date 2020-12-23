@@ -1,4 +1,4 @@
-// TODO: Use real email service
+// TODO: Build up the actual email service and use that
 
 class EmailClient {
   send(target: string, type: string, payload: object) {

@@ -7,7 +7,7 @@
     {
       "type": "pwa-node",
       "request": "launch",
-      "name": "Launch Program",
+      "name": "Launch authentication service",
       "skipFiles": [
         "<node_internals>/**"
       ],
@@ -15,6 +15,19 @@
       "preLaunchTask": "tsc: build - services/authentication/tsconfig.json",
       "outFiles": [
         "${workspaceFolder}/services/authentication/dist/**/*.js"
+      ]
+    },
+    {
+      "type": "pwa-node",
+      "request": "launch",
+      "name": "Launch user service",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/services/user/src/index.ts",
+      "preLaunchTask": "tsc: build - services/user/tsconfig.json",
+      "outFiles": [
+        "${workspaceFolder}/services/user/dist/**/*.js"
       ]
     }
   ]

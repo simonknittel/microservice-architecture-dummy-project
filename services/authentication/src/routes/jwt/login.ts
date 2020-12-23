@@ -1,8 +1,8 @@
 import { Context, Next } from 'koa'
-import { createAccessToken, createRefreshToken } from '../shared/jwt-tokens'
-import comparePasswords from '../shared/compare-passwords'
-import userClient from '../clients/user'
-import RefreshToken from '../models/refresh-token'
+import { createAccessToken, createRefreshToken } from '../../shared/jwt-tokens'
+import comparePasswords from '../../shared/compare-passwords'
+import userClient from '../../clients/user'
+import RefreshToken from '../../models/refresh-token'
 
 export default async function login(ctx: Context, next: Next) {
   // TODO: Check if login is enabled
@@ -36,6 +36,7 @@ export default async function login(ctx: Context, next: Next) {
       user_agent: ctx.headers['user-agent']
     })
 
+    // TODO: Set cookies
     ctx.response.body = {
       accessToken,
       refreshToken

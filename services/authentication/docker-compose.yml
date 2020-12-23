@@ -11,4 +11,4 @@ services:
       POSTGRES_PASSWORD: authentication_service
       POSTGRES_DB: authentication_service
     ports:
-      - 5432:5432
+      - 9000:5432

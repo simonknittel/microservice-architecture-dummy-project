@@ -10,10 +10,6 @@ dotenv.config({
 class Config {
   store: {
     port: number
-
-    jwtSecret: string
-    jwtAccessTokenLifetime: number
-    jwtRefreshTokenLifetime: number
   }
 
   constructor() {
@@ -24,10 +20,6 @@ class Config {
     return new Promise<void>(resolve => {
       this.store = {
         port: parseInt(process.env.PORT),
-
-        jwtSecret: process.env.JWT_SECRET,
-        jwtAccessTokenLifetime: parseInt(process.env.JWT_ACCESS_TOKEN_LIFETIME),
-        jwtRefreshTokenLifetime: parseInt(process.env.JWT_REFRESH_TOKEN_LIFETIME),
       }
 
       resolve()

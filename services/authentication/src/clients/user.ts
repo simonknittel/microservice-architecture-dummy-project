@@ -1,6 +1,6 @@
 import * as mockUsers from './mock-users.json'
 
-// TODO: Use real user service
+// TODO: Build up the actual user service and use that
 
 class UserClient {
   users: UserCollection
@@ -30,9 +30,6 @@ class UserClient {
 
   create({username, password, email}) {
     return new Promise<void>((resolve) => {
-      // TODO: Check if provided username contains forbidden words
-      // TODO: Check if username and email address are unique
-
       const id = Object.entries(this.users).length
 
       this.users[id] = {

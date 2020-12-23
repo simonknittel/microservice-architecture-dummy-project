@@ -1,16 +1,14 @@
 import * as Router from '@koa/router'
-import jwtLogin from './routes/jwt/login'
+import create from './routes/create'
+import get from './routes/get'
 import health from './routes/health'
-import signup from './routes/signup'
-import jwtRefresh from './routes/jwt/refresh'
 import refreshConfig from './routes/refresh'
 
 const router = new Router()
 
 router.get('/health', health)
 router.get('/refresh', refreshConfig)
-router.post('/jwt/login', jwtLogin)
-router.post('/jwt/refresh', jwtRefresh)
-router.post('/signup', signup)
+router.get('/get/:foo', get)
+router.post('/create', create)
 
 export default router

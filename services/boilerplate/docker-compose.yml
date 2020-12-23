@@ -1,0 +1,11 @@
+version: '3.9'
+
+services:
+  database:
+    image: postgres:13.1-alpine
+    environment:
+      POSTGRES_USER: boilerplate_service
+      POSTGRES_PASSWORD: boilerplate_service
+      POSTGRES_DB: boilerplate_service
+    ports:
+      - 5432:5432

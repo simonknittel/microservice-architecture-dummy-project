@@ -7,9 +7,3 @@ interface User {
 }
 
 type UserCollection = Record<User['id'], User>
-
-interface Jwt {
-  userId: number
-  iat: number
-  exp: number
-}
