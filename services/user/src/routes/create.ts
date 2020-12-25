@@ -24,6 +24,7 @@ export default async function create(ctx: Context, next: Next) {
     const insertedUser = await User.query().insert(insertObject)
 
     ctx.response.body = insertedUser
+    ctx.response.status = 201
   } catch (error) {
     switch (error.name) {
       case 'UniqueViolationError':

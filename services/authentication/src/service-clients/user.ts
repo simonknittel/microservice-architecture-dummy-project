@@ -8,9 +8,9 @@ class UserServiceClient {
       if (username) searchParams.append('username', username)
       if (email) searchParams.append('email', email)
 
-      const req = http.request('http://localhost:3001/get', res => {
+      const req = http.request(`http://localhost:3001/get?${searchParams.toString()}`, res => {
         if (res.statusCode !== 200) {
-          logger.error(res)
+          logger.error(res.statusCode)
           return reject()
         }
 
@@ -20,7 +20,7 @@ class UserServiceClient {
         res.on('end', () => {
           try {
             const parsedData = JSON.parse(rawData)
-            resolve(parsedData)
+            resolve(parsedData[0])
           } catch (error) {
             logger.error(error)
           }
@@ -31,6 +31,8 @@ class UserServiceClient {
         logger.error(error)
         reject()
       })
+
+      req.end()
     })
   }
 
@@ -55,18 +57,7 @@ class UserServiceClient {
 
       const req = http.request(url, options, res => {
         if (res.statusCode !== 200) return reject(res.statusCode)
-
-        res.setEncoding('utf8')
-        let rawData = ''
-        res.on('data', chunk => { rawData += chunk })
-        res.on('end', () => {
-          try {
-            const parsedData = JSON.parse(rawData)
-            resolve(parsedData)
-          } catch (error) {
-            reject(error)
-          }
-        })
+        resolve()
       })
 
       req.on('error', error => {

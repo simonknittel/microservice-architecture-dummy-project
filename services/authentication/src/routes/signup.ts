@@ -33,7 +33,7 @@ export default async function(ctx: Context, next: Next) {
       await emailServiceClient.send(email, 'emailVerification', { token })
     }
 
-    ctx.response.status = 200
+    ctx.response.status = 204
   } catch (error) {
     if (error === 409) { // Prevent information disclosure if user already exists
       ctx.response.status === 400
