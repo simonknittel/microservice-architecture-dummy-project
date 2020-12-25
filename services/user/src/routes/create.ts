@@ -1,4 +1,5 @@
 import { Context, Next } from 'koa';
+import logger from '../logger';
 import User from '../models/user';
 
 export default async function create(ctx: Context, next: Next) {
@@ -20,13 +21,20 @@ export default async function create(ctx: Context, next: Next) {
     if (email) insertObject.email = email
     insertObject.password = password
 
-    await User.query().insert(insertObject)
+    const insertedUser = await User.query().insert(insertObject)
 
-    ctx.response.status = 200
+    ctx.response.body = insertedUser
   } catch (error) {
-    // TODO: Differentiate between 4xx (e.g. duplicate entry) and 5xx
-    ctx.response.status = 500
-    console.error(error)
+    switch (error.name) {
+      case 'UniqueViolationError':
+        ctx.response.status = 409
+        break;
+
+      default:
+        ctx.response.status = 500
+        logger.error(error)
+        break;
+    }
   }
 
   next()

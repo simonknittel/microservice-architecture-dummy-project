@@ -6,8 +6,6 @@ interface User {
   emailVerified?: boolean
 }
 
-type UserCollection = Record<User['id'], User>
-
 interface Jwt {
   userId: number
   iat: number

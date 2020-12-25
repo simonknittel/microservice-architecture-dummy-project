@@ -1,7 +1,7 @@
 import { Context, Next } from 'koa'
 import { createAccessToken, createRefreshToken } from '../../shared/jwt-tokens'
 import comparePasswords from '../../shared/compare-passwords'
-import userClient from '../../clients/user'
+import userServiceClient from '../../service-clients/user'
 import RefreshToken from '../../models/refresh-token'
 
 export default async function login(ctx: Context, next: Next) {
@@ -17,7 +17,7 @@ export default async function login(ctx: Context, next: Next) {
   }
 
   try {
-    const user = await userClient.findOne({ username, email })
+    const user = await userServiceClient.get({ username, email })
 
     const result = await comparePasswords(password, user.password)
     if (!result) throw ''

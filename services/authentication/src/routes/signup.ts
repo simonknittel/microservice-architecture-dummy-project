@@ -1,8 +1,9 @@
 import { Context, Next } from 'koa'
-import emailClient from '../clients/email'
+import emailServiceClient from '../service-clients/email'
 import hashPassword from '../shared/hash-password'
-import userClient from '../clients/user'
+import userServiceClient from '../service-clients/user'
 import {v4 as uuidv4} from 'uuid'
+import logger from '../logger'
 
 export default async function(ctx: Context, next: Next) {
   // TODO: Check if signup is enabled
@@ -22,17 +23,27 @@ export default async function(ctx: Context, next: Next) {
   try {
     const hashedPassword = await hashPassword(password)
 
-    await userClient.create({ username, password: hashedPassword, email })
+    await userServiceClient.create({ username, password: hashedPassword, email })
 
     if (email) {
       const token = uuidv4()
 
       // TODO: Save token to database
 
-      emailClient.send(email, 'emailVerification', { token })
+      await emailServiceClient.send(email, 'emailVerification', { token })
     }
+
+    ctx.response.status = 200
   } catch (error) {
-    ctx.response.status = 400
+    if (error === 409) { // Prevent information disclosure if user already exists
+      ctx.response.status === 400
+    } else if (error >= 400 && error < 500) {
+      ctx.response.status = 400
+      logger.error(error)
+    } else {
+      ctx.response.status = 500
+      logger.error(error)
+    }
   }
 
   next()

@@ -3,11 +3,12 @@ import * as bodyParser from 'koa-bodyparser'
 import * as Koa from 'koa'
 import config from './config'
 import router from './routes'
+import logger from './logger'
 
 new Koa()
   .use(bodyParser())
   .use(router.routes())
   .use(router.allowedMethods())
   .listen(config.get('port'), () => {
-    console.log('Server started.')
+    logger.log('Server started.')
   })

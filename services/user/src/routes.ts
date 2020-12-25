@@ -8,7 +8,7 @@ const router = new Router()
 
 router.get('/health', health)
 router.get('/refresh', refreshConfig)
-router.get('/get/:foo', get)
+router.get('/get', get)
 router.post('/create', create)
 
 export default router
