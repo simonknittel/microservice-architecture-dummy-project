@@ -7,7 +7,7 @@ export default async function refresh(ctx: Context, next: Next) {
 
   if (!refreshToken) {
     ctx.response.status = 400
-    return next()
+    return await next()
   }
 
   try {
@@ -40,4 +40,6 @@ export default async function refresh(ctx: Context, next: Next) {
     ctx.response.status = 401 // TODO: Correct code?
     console.error(error)
   }
+
+  await next()
 }

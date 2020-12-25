@@ -2,7 +2,7 @@ import './db'
 import * as bodyParser from 'koa-bodyparser'
 import * as Koa from 'koa'
 import config from './config'
-import router from './routes'
+import router from './router'
 import logger from './logger'
 
 new Koa()

@@ -10,5 +10,5 @@ export default async function refreshConfig(ctx: Context, next: Next) {
     ctx.response.status = 500
   }
 
-  next()
+  await next()
 }

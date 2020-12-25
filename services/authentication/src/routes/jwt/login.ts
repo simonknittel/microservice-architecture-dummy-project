@@ -13,7 +13,7 @@ export default async function login(ctx: Context, next: Next) {
 
   if ((!username && !email) || !password) {
     ctx.response.status = 400
-    return next()
+    return await next()
   }
 
   try {
@@ -47,5 +47,5 @@ export default async function login(ctx: Context, next: Next) {
     console.error(error)
   }
 
-  next()
+  await next()
 }
