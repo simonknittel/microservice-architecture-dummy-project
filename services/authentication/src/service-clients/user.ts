@@ -7,9 +7,10 @@ class UserServiceClient {
     this.url = 'http://localhost:3001'
   }
 
-  get({ username, email }) {
+  get({ id, username, email }: { id?: number, username?: string, email?: string}) {
     return new Promise<User>((resolve, reject) => {
       const searchParams = new URLSearchParams()
+      if (id) searchParams.append('id', id.toString())
       if (username) searchParams.append('username', username)
       if (email) searchParams.append('email', email)
 
@@ -39,7 +40,7 @@ class UserServiceClient {
     })
   }
 
-  create({username, password, email}) {
+  create({ username, password, email }) {
     return new Promise<User>((resolve, reject) => {
       const postData: any = {}
       if (username) postData.username = username

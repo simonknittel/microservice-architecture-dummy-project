@@ -1,5 +1,5 @@
-import { Context, Next } from 'koa';
-import User from '../models/user';
+import { Context, Next } from 'koa'
+import User from '../models/user'
 
 export default async function update(ctx: Context, next: Next) {
   const userId = ctx.params.userId?.trim()

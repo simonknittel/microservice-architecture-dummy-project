@@ -1,8 +1,8 @@
-import { Next } from 'koa';
-import { Context } from 'koa';
-import config from '../config';
-import EmailVerificationToken from '../models/email-verification-token';
-import userServiceClient from '../service-clients/user';
+import { Next } from 'koa'
+import { Context } from 'koa'
+import config from '../config'
+import EmailVerificationToken from '../models/email-verification-token'
+import userServiceClient from '../service-clients/user'
 
 export default async function verifyEmail(ctx: Context, next: Next) {
   const token = ctx.request.query.token?.trim()

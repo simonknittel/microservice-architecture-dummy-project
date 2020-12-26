@@ -18,7 +18,7 @@ Responsible for:
   - Refresh tokens will be validated against the database
   - For each refresh token the user agent is saved to the database so we can show the user their active sessions
 - User signup
-  - Signup confirmation
+  - Email verification
 - Password reset
 
 ## Useful commands

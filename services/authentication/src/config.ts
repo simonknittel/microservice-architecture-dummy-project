@@ -16,6 +16,7 @@ class Config {
     jwtRefreshTokenLifetime: number
 
     emailVerificationTokenMaxAge: number
+    passwordResetTokenMaxAge: number
   }
 
   constructor() {
@@ -32,6 +33,7 @@ class Config {
         jwtRefreshTokenLifetime: parseInt(process.env.JWT_REFRESH_TOKEN_LIFETIME),
 
         emailVerificationTokenMaxAge: parseInt(process.env.EMAIL_VERIFICATION_TOKEN_MAX_AGE),
+        passwordResetTokenMaxAge: parseInt(process.env.PASSWORD_RESET_TOKEN_MAX_AGE),
       }
 
       resolve()
