@@ -52,7 +52,7 @@ export default async function setPassword(ctx: Context, next: Next) {
 
     // Send success email
     const user = await userServiceClient.get({ id: foundToken.user_id })
-    await emailServiceClient.send(user.email, 'newPassword')
+    await emailServiceClient.send(user.email, 'newpassword')
 
     ctx.response.status = 204
     return await next()

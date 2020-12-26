@@ -29,6 +29,19 @@
       "outFiles": [
         "${workspaceFolder}/services/user/dist/**/*.js"
       ]
+    },
+    {
+      "type": "pwa-node",
+      "request": "launch",
+      "name": "Launch email service",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/services/email/src/index.ts",
+      "preLaunchTask": "tsc: build - services/email/tsconfig.json",
+      "outFiles": [
+        "${workspaceFolder}/services/email/dist/**/*.js"
+      ]
     }
   ]
 }

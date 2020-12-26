@@ -1,3 +1,1 @@
 # Email Service
-
-TODO: Mailgun

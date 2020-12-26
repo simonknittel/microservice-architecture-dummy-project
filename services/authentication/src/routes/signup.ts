@@ -35,7 +35,7 @@ export default async function(ctx: Context, next: Next) {
         token
       })
 
-      await emailServiceClient.send(email, 'emailVerification', { token })
+      await emailServiceClient.send(email, 'emailverification', { link: token })
     }
 
     ctx.response.status = 204

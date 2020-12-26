@@ -38,7 +38,7 @@ export default async function requestPasswordReset(ctx: Context, next: Next) {
       token
     })
 
-    await emailServiceClient.send(email, 'passwordReset', { token })
+    await emailServiceClient.send(email, 'passwordreset', { link: token })
 
     ctx.response.status = 204
     return await next()

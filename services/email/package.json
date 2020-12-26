@@ -1,12 +1,10 @@
 {
-  "name": "user",
+  "name": "email",
   "version": "0.1.0",
   "description": "",
   "scripts": {
     "start": "tsc && node dist/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "migrate:latest": "knex migrate:latest --knexfile src/knexfile.js",
-    "migrate:make": "knex migrate:make --knexfile src/knexfile.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Simon Knittel (https://github.com/simonknittel)",
   "license": "MIT",
@@ -14,7 +12,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/simonknittel/microservice-architecture-dummy-project.git",
-    "directory": "services/user"
+    "directory": "services/email"
   },
   "engines": {
     "node": "14.15.3"
@@ -28,10 +26,7 @@
   "dependencies": {
     "@koa/router": "10.0.0",
     "dotenv": "8.2.0",
-    "knex": "0.21.14",
     "koa": "2.13.0",
-    "koa-bodyparser": "4.3.0",
-    "objection": "2.2.3",
-    "pg": "8.5.1"
+    "koa-bodyparser": "4.3.0"
   }
 }
