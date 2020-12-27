@@ -30,6 +30,7 @@ export default async function(ctx: Context, next: Next) {
 
     const createdUser = await userServiceClient.create({ username, password: hashedPassword, email })
 
+    // TODO: Does this need to block the response for the user?
     if (email) {
       const token = uuidv4()
 

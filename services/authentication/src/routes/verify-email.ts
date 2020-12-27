@@ -23,7 +23,9 @@ export default async function verifyEmail(ctx: Context, next: Next) {
 
     // Delete outdated token
     if (Date.now() - foundToken.created_at > config.emailVerificationTokenMaxAge) {
+      // TODO: Does this need to block the response for the user?
       await EmailVerificationToken.query().where({ id: foundToken.id }).delete()
+
       ctx.response.status = 400
       return await next()
     }
@@ -32,6 +34,7 @@ export default async function verifyEmail(ctx: Context, next: Next) {
     await userServiceClient.update(foundToken.user_id, { emailVerified: true })
 
     // Delete all emailVerificationTokens for this user
+    // TODO: Does this need to block the response for the user?
     await EmailVerificationToken.query().where({ user_id: foundToken.user_id }).delete()
 
     ctx.response.status = 204

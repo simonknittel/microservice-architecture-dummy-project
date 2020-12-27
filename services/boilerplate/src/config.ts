@@ -16,7 +16,7 @@ class Config {
 
   refresh() {
     return new Promise<void>(resolve => {
-      this.port = parseInt(process.env.PORT),
+      this.port = parseInt(process.env.PORT)
 
       resolve()
     })
