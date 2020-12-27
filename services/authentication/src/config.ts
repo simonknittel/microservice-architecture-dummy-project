@@ -8,16 +8,20 @@ dotenv.config({
 })
 
 class Config {
-  store: {
-    port: number
+  port: number
 
-    jwtSecret: string
-    jwtAccessTokenLifetime: number
-    jwtRefreshTokenLifetime: number
+  jwtSecret: string
+  jwtAccessTokenLifetime: number
+  jwtRefreshTokenLifetime: number
 
-    emailVerificationTokenMaxAge: number
-    passwordResetTokenMaxAge: number
-  }
+  emailVerificationTokenMaxAge: number
+  passwordResetTokenMaxAge: number
+
+  signupEnabled: boolean
+  loginEnabled: boolean
+
+  userServiceHost: string
+  emailServiceHost: string
 
   constructor() {
     this.refresh()
@@ -25,23 +29,23 @@ class Config {
 
   refresh() {
     return new Promise<void>(resolve => {
-      this.store = {
-        port: parseInt(process.env.PORT),
+      this.port = parseInt(process.env.PORT),
 
-        jwtSecret: process.env.JWT_SECRET,
-        jwtAccessTokenLifetime: parseInt(process.env.JWT_ACCESS_TOKEN_LIFETIME),
-        jwtRefreshTokenLifetime: parseInt(process.env.JWT_REFRESH_TOKEN_LIFETIME),
+      this.jwtSecret = process.env.JWT_SECRET,
+      this.jwtAccessTokenLifetime = parseInt(process.env.JWT_ACCESS_TOKEN_LIFETIME),
+      this.jwtRefreshTokenLifetime = parseInt(process.env.JWT_REFRESH_TOKEN_LIFETIME),
 
-        emailVerificationTokenMaxAge: parseInt(process.env.EMAIL_VERIFICATION_TOKEN_MAX_AGE),
-        passwordResetTokenMaxAge: parseInt(process.env.PASSWORD_RESET_TOKEN_MAX_AGE),
-      }
+      this.emailVerificationTokenMaxAge = parseInt(process.env.EMAIL_VERIFICATION_TOKEN_MAX_AGE),
+      this.passwordResetTokenMaxAge = parseInt(process.env.PASSWORD_RESET_TOKEN_MAX_AGE),
+
+      this.signupEnabled = process.env.SIGNUP_ENABLED ? Boolean(process.env.SIGNUP_ENABLED) : true,
+      this.loginEnabled = process.env.LOGIN_ENABLED ? Boolean(process.env.LOGIN_ENABLED) : true,
+
+      this.userServiceHost = process.env.USER_SERVICE_HOST,
+      this.emailServiceHost = process.env.EMAIL_SERVICE_HOST,
 
       resolve()
     })
-  }
-
-  get(key: string) {
-    return this.store[key]
   }
 }
 

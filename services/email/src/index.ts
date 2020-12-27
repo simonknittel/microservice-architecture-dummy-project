@@ -8,6 +8,6 @@ new Koa()
   .use(bodyParser())
   .use(router.routes())
   .use(router.allowedMethods())
-  .listen(config.get('port'), () => {
+  .listen(config.port, () => {
     logger.log('Server started.')
   })

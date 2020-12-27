@@ -34,7 +34,7 @@ export default async function setPassword(ctx: Context, next: Next) {
     const foundToken = foundTokens[0]
 
     // Delete outdated token
-    if (Date.now() - foundToken.created_at > config.get('passwordResetTokenMaxAge')) {
+    if (Date.now() - foundToken.created_at > config.passwordResetTokenMaxAge) {
       await PasswordResetToken.query().where({ id: foundToken.id }).delete()
       ctx.response.status = 400
       return await next()

@@ -5,9 +5,13 @@ import EmailVerificationToken from '../models/email-verification-token'
 import hashPassword from '../shared/hash-password'
 import logger from '../logger'
 import userServiceClient from '../service-clients/user'
+import config from '../config'
 
 export default async function(ctx: Context, next: Next) {
-  // TODO: Check if signup is enabled
+  if (config.signupEnabled === false) {
+    ctx.response.status = 403
+    return await next()
+  }
 
   const username = ctx.request.body.username?.trim()
   const email = ctx.request.body.email?.trim()

@@ -42,6 +42,19 @@
       "outFiles": [
         "${workspaceFolder}/services/email/dist/**/*.js"
       ]
+    },
+    {
+      "type": "pwa-node",
+      "request": "launch",
+      "name": "Launch api-gateway service",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/services/api-gateway/src/index.ts",
+      "preLaunchTask": "tsc: build - services/api-gateway/tsconfig.json",
+      "outFiles": [
+        "${workspaceFolder}/services/api-gateway/dist/**/*.js"
+      ]
     }
   ]
 }

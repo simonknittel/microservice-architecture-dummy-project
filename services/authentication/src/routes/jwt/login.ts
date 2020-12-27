@@ -3,9 +3,14 @@ import { createAccessToken, createRefreshToken } from '../../shared/jwt-tokens'
 import comparePasswords from '../../shared/compare-passwords'
 import userServiceClient from '../../service-clients/user'
 import RefreshToken from '../../models/refresh-token'
+import logger from '../../logger'
+import config from '../../config'
 
 export default async function login(ctx: Context, next: Next) {
-  // TODO: Check if login is enabled
+  if (config.loginEnabled === false) {
+    ctx.response.status = 403
+    return await next()
+  }
 
   const username = ctx.request.body.username?.trim()
   const email = ctx.request.body.email?.trim()
@@ -44,7 +49,7 @@ export default async function login(ctx: Context, next: Next) {
   } catch (error) {
     // TODO: Differentiate between 5xx and 401
     ctx.response.status = 401
-    console.error(error)
+    logger.error(error)
   }
 
   await next()

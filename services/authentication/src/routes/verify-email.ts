@@ -22,7 +22,7 @@ export default async function verifyEmail(ctx: Context, next: Next) {
     const foundToken = foundTokens[0]
 
     // Delete outdated token
-    if (Date.now() - foundToken.created_at > config.get('emailVerificationTokenMaxAge')) {
+    if (Date.now() - foundToken.created_at > config.emailVerificationTokenMaxAge) {
       await EmailVerificationToken.query().where({ id: foundToken.id }).delete()
       ctx.response.status = 400
       return await next()

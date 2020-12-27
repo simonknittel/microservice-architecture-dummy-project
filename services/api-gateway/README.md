@@ -3,5 +3,5 @@
 Responsible for:
 
 - Routing
-- Authentication
 - Rate limiting
+- Authentication

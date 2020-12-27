@@ -9,8 +9,8 @@ const router = new Router()
 
 router.get('/health', health)
 router.get('/refresh', refreshConfig)
-router.get('/get', get)
-router.post('/create', create)
+router.get('/user/find', get)
+router.post('/user', create)
 router.patch('/:userId', update)
 
 export default router

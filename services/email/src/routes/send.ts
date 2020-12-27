@@ -27,18 +27,18 @@ export default function send(ctx: Context, next: Next) {
     }
 
     const data = querystring.stringify({
-      from: from || config.get('mailgunFrom'),
+      from: from || config.mailgunFrom,
       to,
       subject,
       template,
       'h:X-Mailgun-Variables': JSON.stringify(variables)
     })
 
-    const key = Buffer.from(`api:${ config.get('mailgunKey') }`).toString('base64')
+    const key = Buffer.from(`api:${ config.mailgunKey }`).toString('base64')
 
     const req = https.request({
-      hostname: config.get('mailgunHost'),
-      path: `/v3/${ config.get('mailgunDomain') }/messages`,
+      hostname: config.mailgunHost,
+      path: `/v3/${ config.mailgunDomain }/messages`,
       method: 'POST',
       headers: {
         'Authorization': `Basic ${ key }`,

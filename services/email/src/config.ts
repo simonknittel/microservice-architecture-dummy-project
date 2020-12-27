@@ -8,14 +8,12 @@ dotenv.config({
 })
 
 class Config {
-  store: {
-    port: number
+  port: number
 
-    mailgunHost: string
-    mailgunDomain: string
-    mailgunKey: string
-    mailgunFrom: string
-  }
+  mailgunHost: string
+  mailgunDomain: string
+  mailgunKey: string
+  mailgunFrom: string
 
   constructor() {
     this.refresh()
@@ -23,21 +21,15 @@ class Config {
 
   refresh() {
     return new Promise<void>(resolve => {
-      this.store = {
-        port: parseInt(process.env.PORT),
+      this.port = parseInt(process.env.PORT),
 
-        mailgunHost: process.env.MAILGUN_HOST,
-        mailgunDomain: process.env.MAILGUN_DOMAIN,
-        mailgunKey: process.env.MAILGUN_KEY,
-        mailgunFrom: process.env.MAILGUN_FROM,
-      }
+      this.mailgunHost = process.env.MAILGUN_HOST,
+      this.mailgunDomain = process.env.MAILGUN_DOMAIN,
+      this.mailgunKey = process.env.MAILGUN_KEY,
+      this.mailgunFrom = process.env.MAILGUN_FROM,
 
       resolve()
     })
-  }
-
-  get(key: string) {
-    return this.store[key]
   }
 }
 

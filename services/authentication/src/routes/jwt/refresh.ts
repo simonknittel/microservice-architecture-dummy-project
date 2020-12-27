@@ -1,4 +1,5 @@
 import { Context, Next } from 'koa';
+import logger from '../../logger';
 import RefreshToken from '../../models/refresh-token';
 import { createAccessToken, createRefreshToken, verifyToken } from '../../shared/jwt-tokens';
 
@@ -38,7 +39,7 @@ export default async function refresh(ctx: Context, next: Next) {
     }
   } catch (error) {
     ctx.response.status = 401 // TODO: Correct code?
-    console.error(error)
+    logger.error(error)
   }
 
   await next()

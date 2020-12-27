@@ -1,12 +1,7 @@
 import * as http from 'http'
+import config from '../config'
 
 class UserServiceClient {
-  url: string
-
-  constructor() {
-    this.url = 'http://localhost:3001'
-  }
-
   get({ id, username, email }: { id?: number, username?: string, email?: string}) {
     return new Promise<User>((resolve, reject) => {
       const searchParams = new URLSearchParams()
@@ -14,7 +9,7 @@ class UserServiceClient {
       if (username) searchParams.append('username', username)
       if (email) searchParams.append('email', email)
 
-      const req = http.request(`${this.url}/get?${searchParams.toString()}`, res => {
+      const req = http.request(`${ config.userServiceHost }/user/find?${searchParams.toString()}`, res => {
         if (res.statusCode !== 200) {
           return reject(res.statusCode)
         }
@@ -57,7 +52,7 @@ class UserServiceClient {
         }
       }
 
-      const req = http.request(`${this.url}/create`, options, res => {
+      const req = http.request(`${ config.userServiceHost }/user`, options, res => {
         if (res.statusCode !== 201) return reject(res.statusCode)
 
         res.setEncoding('utf8')
@@ -92,7 +87,7 @@ class UserServiceClient {
         }
       }
 
-      const req = http.request(`${this.url}/${userId}`, options, res => {
+      const req = http.request(`${ config.userServiceHost }/user/${userId}`, options, res => {
         if (res.statusCode !== 204) return reject(res.statusCode)
         resolve()
       })
