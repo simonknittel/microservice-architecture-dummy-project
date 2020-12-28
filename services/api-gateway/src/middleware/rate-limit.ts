@@ -2,6 +2,7 @@ import { IncomingMessage, ServerResponse } from 'http'
 import * as Redis from 'ioredis'
 import config from '../config'
 import logger from '../logger'
+import getPath from '../shared/get-path'
 
 const redis = new Redis({
   host: config.redisHost,
@@ -11,27 +12,7 @@ const redis = new Redis({
 
 export default function rateLimit(req: IncomingMessage, res: ServerResponse) {
   return new Promise<void>(resolve => {
-    const ip = getIp(req)
-
-    let redisKey = ip
-
-    const serviceName = req.url.split('/')[1]
-    let timeframeStart = Date.now() - config.defaultRateLimit.timeframe
-    let maxRequestsPerTimeframe = config.defaultRateLimit.count
-
-    if (config.services[serviceName]) {
-      const service = config.services[serviceName]
-
-      if (service.rateLimit) {
-        redisKey += `-${serviceName}`
-
-        timeframeStart = Date.now() - service.rateLimit.timeframe
-        maxRequestsPerTimeframe = service.rateLimit.count
-      }
-
-      // TODO: Rate limiting per route
-      // TODO: Add path to redisKey
-    }
+    const { redisKey, timeframeStart, maxRequestsPerTimeframe } = getConfig(req)
 
     redis
       .get(redisKey)
@@ -81,4 +62,56 @@ export default function rateLimit(req: IncomingMessage, res: ServerResponse) {
 // TODO: More reliable way to retrieve IP address
 function getIp(req: IncomingMessage) {
   return (typeof req.headers['x-forwarded-for'] === 'string' && req.headers['x-forwarded-for'].split(',').shift()) || req.connection?.remoteAddress
+}
+
+function getConfig(req: IncomingMessage) {
+  let redisKey = getIp(req)
+  let timeframeStart = Date.now() - config.defaultRateLimit.timeframe
+  let maxRequestsPerTimeframe = config.defaultRateLimit.count
+
+  ;({ redisKey, timeframeStart, maxRequestsPerTimeframe } = getServiceSpecificConfig(req, redisKey, timeframeStart, maxRequestsPerTimeframe))
+  ;({ redisKey, timeframeStart, maxRequestsPerTimeframe } = getPathSpecificConfig(req, redisKey, timeframeStart, maxRequestsPerTimeframe))
+
+  return {
+    redisKey,
+    timeframeStart,
+    maxRequestsPerTimeframe
+  }
+}
+
+function getServiceSpecificConfig(req: IncomingMessage, redisKey: string, timeframeStart: number, maxRequestsPerTimeframe: number) {
+  const path = getPath(req)
+
+  const serviceKey = config.routes[path].serviceKey
+  const service = config.services[serviceKey]
+
+  if (service.rateLimit) {
+    redisKey += `-${serviceKey}`
+    timeframeStart = Date.now() - service.rateLimit.timeframe
+    maxRequestsPerTimeframe = service.rateLimit.count
+  }
+
+  return {
+    redisKey,
+    timeframeStart,
+    maxRequestsPerTimeframe
+  }
+}
+
+function getPathSpecificConfig(req: IncomingMessage, redisKey: string, timeframeStart: number, maxRequestsPerTimeframe: number) {
+  const path = getPath(req)
+
+  const route = config.routes[path]
+
+  if (route.rateLimit) {
+    redisKey += `-${path}`
+    timeframeStart = Date.now() - route.rateLimit.timeframe
+    maxRequestsPerTimeframe = route.rateLimit.count
+  }
+
+  return {
+    redisKey,
+    timeframeStart,
+    maxRequestsPerTimeframe
+  }
 }

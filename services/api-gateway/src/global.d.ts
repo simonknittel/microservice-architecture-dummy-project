@@ -1,19 +1,40 @@
-interface ServiceConfig {
+import { IncomingMessage } from 'http'
+
+interface Service {
   host: string
   port: number
+
   rateLimit?: RateLimitConfig
-  routes: ServiceRouteConfigCollection
+  authentication?: AuthenticationConfig
 }
 
-type ServiceConfigCollection = Record<string, ServiceConfig>
+type ServiceCollection = Record<string, Service>
 
-interface ServiceRouteConfig {
+interface Route {
+  path?: string
   rateLimit?: RateLimitConfig
+  authentication?: AuthenticationConfig
 }
 
-type ServiceRouteConfigCollection = Record<string, ServiceRouteConfig>
+type RouteCollection = Record<string, Route>
 
 interface RateLimitConfig {
   timeframe: number
   count: number
 }
+
+interface AuthenticationConfig {
+  required?: boolean // Only validates access token on request
+  strong?: boolean // Also validates refresh token on request
+}
+
+interface IM extends IncomingMessage {
+  user?: any
+}
+
+interface NormalizedRoute extends Route {
+  serviceKey: string
+  routeKey: string
+}
+
+type NormalizedRouteCollection = Record<string, NormalizedRoute>

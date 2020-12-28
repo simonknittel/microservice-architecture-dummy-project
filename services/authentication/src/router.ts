@@ -19,5 +19,6 @@ router.post('/signup', signup)
 router.post('/request-password-reset', requestPasswordReset)
 router.post('/set-password', setPassword)
 router.get('/verify-email', verifyEmail)
+router.get('/me', ctx => ctx.response.status = 501)
 
 export default router

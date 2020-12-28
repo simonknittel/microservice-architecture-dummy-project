@@ -9,7 +9,7 @@ class UserServiceClient {
       if (username) searchParams.append('username', username)
       if (email) searchParams.append('email', email)
 
-      const req = http.request(`${ config.userServiceHost }/user/find?${searchParams.toString()}`, res => {
+      const req = http.request(`${ config.userServiceHost }/users/find?${searchParams.toString()}`, res => {
         if (res.statusCode !== 200) {
           return reject(res.statusCode)
         }
@@ -52,7 +52,7 @@ class UserServiceClient {
         }
       }
 
-      const req = http.request(`${ config.userServiceHost }/user`, options, res => {
+      const req = http.request(`${ config.userServiceHost }/users`, options, res => {
         if (res.statusCode !== 201) return reject(res.statusCode)
 
         res.setEncoding('utf8')
@@ -87,7 +87,7 @@ class UserServiceClient {
         }
       }
 
-      const req = http.request(`${ config.userServiceHost }/user/${userId}`, options, res => {
+      const req = http.request(`${ config.userServiceHost }/users/${userId}`, options, res => {
         if (res.statusCode !== 204) return reject(res.statusCode)
         resolve()
       })

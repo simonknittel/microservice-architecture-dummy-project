@@ -1,7 +1,8 @@
 // TODO: Integrate configuration service
 
-import * as path from 'path'
+import { NormalizedRouteCollection, RateLimitConfig, Service, ServiceCollection, RouteCollection } from './global'
 import * as dotenv from 'dotenv'
+import * as path from 'path'
 
 dotenv.config({
   path: path.resolve(__dirname, '../.env')
@@ -16,7 +17,10 @@ class Config {
 
   defaultRateLimit: RateLimitConfig
 
-  services: ServiceConfigCollection
+  services: ServiceCollection
+  routes: NormalizedRouteCollection
+
+  jwtSecret: string
 
   constructor() {
     this.refresh()
@@ -36,23 +40,42 @@ class Config {
       }
 
       this.services = {}
+      this.routes = {}
 
-      this.services.authentication = {
+      this.registerService('authentication', {
         host: 'localhost',
         port: 3003,
-        routes: {
-          '/jwt/login': {},
-          '/jwt/refresh': {},
-          '/logout': {},
-          '/request-password-reset': {},
-          '/set-password': {},
-          '/signup': {},
-          '/verify-email': {},
-        },
-      }
+      }, {
+        '/jwt/login': {},
+        '/jwt/refresh': {},
+        '/logout': {},
+        '/request-password-reset': {},
+        '/set-password': {},
+        '/signup': {},
+        '/verify-email': {},
+        '/me': {
+          authentication: {
+            required: true
+          }
+        }
+      })
+
+      this.jwtSecret = process.env.JWT_SECRET,
 
       resolve()
     })
+  }
+
+  registerService(serviceKey: string, config: Service, routes: RouteCollection) {
+    this.services[serviceKey] = config
+
+    for (const [routeKey, routeConfig] of Object.entries(routes)) {
+      this.routes[routeKey] = {
+        serviceKey,
+        routeKey,
+        ...routeConfig
+      }
+    }
   }
 }
 

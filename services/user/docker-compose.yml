@@ -1,7 +1,7 @@
 version: '3.9'
 
 services:
-  database:
+  user_database:
     image: postgres:13.1-alpine
     environment:
       POSTGRES_USER: user_service
@@ -9,3 +9,11 @@ services:
       POSTGRES_DB: user_service
     ports:
       - 9001:5432
+
+  user_service:
+    build: .
+    ports:
+      - 3001:3000
+    env_file: .env
+    environment:
+      PORT: 3000
