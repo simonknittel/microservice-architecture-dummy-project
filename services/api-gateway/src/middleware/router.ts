@@ -30,7 +30,7 @@ export default function router(originalReq: IncomingMessage, originalRes: Server
       return
     }
 
-    logger.log(`Serving: ${ originalReq.method } ${ originalReq.url } -> ${ options.host }:${ options.port }${ options.path }`)
+    logger.log(`-> ${ options.host }:${ options.port }${ options.path }`)
 
     const proxy = request(options, res => {
       originalRes.writeHead(res.statusCode, res.headers)

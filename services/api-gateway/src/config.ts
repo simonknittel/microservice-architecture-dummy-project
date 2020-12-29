@@ -36,9 +36,10 @@ class Config {
       this.services = {}
       this.routes = {}
 
+      // TODO
       this.registerService('authentication', {
-        host: 'localhost',
-        port: 3003,
+        host: 'authentication_service',
+        port: 3000,
       }, {
         '/jwt/login': {},
         '/jwt/refresh': {},

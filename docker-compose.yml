@@ -1,0 +1,65 @@
+version: '3.9'
+
+services:
+  api_gateway_redis:
+    image: redis:6.0.9-alpine
+
+  api_gateway_service:
+    build: services/api-gateway/
+    ports:
+      - 3000:3000
+    env_file: services/api-gateway/.env
+    environment:
+      REDIS_HOST: api_gateway_redis
+      REDIS_PORT: 6379
+    depends_on:
+      - api_gateway_redis
+      - authentication_service
+
+  authentication_database:
+    image: postgres:13.1-alpine
+    ports:
+      - 9000:5432
+    environment:
+      POSTGRES_USER: authentication_service
+      POSTGRES_PASSWORD: authentication_service
+      POSTGRES_DB: authentication_service
+
+  authentication_service:
+    build: services/authentication/
+    env_file: services/authentication/.env
+    environment:
+      PORT: 3000
+      DATABASE_HOST: authentication_database
+      DATABASE_PORT: 5432
+      EMAIL_SERVICE_HOST: http://email_service:3000
+      USER_SERVICE_HOST: http://user_service:3000
+    depends_on:
+      - authentication_database
+      - user_service
+      - email_service
+
+  email_service:
+    build: services/email/
+    env_file: services/email/.env
+    environment:
+      PORT: 3000
+
+  user_database:
+    image: postgres:13.1-alpine
+    ports:
+      - 9001:5432
+    environment:
+      POSTGRES_USER: user_service
+      POSTGRES_PASSWORD: user_service
+      POSTGRES_DB: user_service
+
+  user_service:
+    build: services/user/
+    env_file: services/user/.env
+    environment:
+      PORT: 3000
+      DATABASE_HOST: user_database
+      DATABASE_PORT: 5432
+    depends_on:
+      - user_database
