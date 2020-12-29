@@ -17,5 +17,5 @@ function onRequest(req: IncomingMessage, res: ServerResponse) {
 
 createServer(onRequest)
   .listen(config.port, () => {
-    logger.log('Server started.')
+    logger.log(`Listening on port ${ config.port }`)
   })

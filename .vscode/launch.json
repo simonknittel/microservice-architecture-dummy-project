@@ -15,7 +15,8 @@
       "preLaunchTask": "tsc: build - services/authentication/tsconfig.json",
       "outFiles": [
         "${workspaceFolder}/services/authentication/dist/**/*.js"
-      ]
+      ],
+      "envFile": "${workspaceFolder}/services/authentication/.env"
     },
     {
       "type": "pwa-node",
@@ -28,7 +29,8 @@
       "preLaunchTask": "tsc: build - services/user/tsconfig.json",
       "outFiles": [
         "${workspaceFolder}/services/user/dist/**/*.js"
-      ]
+      ],
+      "envFile": "${workspaceFolder}/services/user/.env"
     },
     {
       "type": "pwa-node",
@@ -41,7 +43,8 @@
       "preLaunchTask": "tsc: build - services/email/tsconfig.json",
       "outFiles": [
         "${workspaceFolder}/services/email/dist/**/*.js"
-      ]
+      ],
+      "envFile": "${workspaceFolder}/services/email/.env"
     },
     {
       "type": "pwa-node",
@@ -54,7 +57,8 @@
       "preLaunchTask": "tsc: build - services/api-gateway/tsconfig.json",
       "outFiles": [
         "${workspaceFolder}/services/api-gateway/dist/**/*.js"
-      ]
+      ],
+      "envFile": "${workspaceFolder}/services/api-gateway/.env"
     }
   ]
 }

@@ -1,15 +1,19 @@
 version: '3.9'
 
 services:
-  redis:
+  api_gateway_redis:
     image: redis:6.0.9-alpine
     ports:
       - 9500:6379
 
-  service:
+  api_gateway_service:
     build: .
     ports:
       - 3000:3000
     env_file: .env
     environment:
       PORT: 3000
+      REDIS_HOST: api_gateway_redis
+      REDIS_PORT: 6379
+    depends_on:
+      - api_gateway_redis

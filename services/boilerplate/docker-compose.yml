@@ -17,3 +17,7 @@ services:
     env_file: .env
     environment:
       PORT: 3000
+      DATABASE_HOST: boilerplate_database
+      DATABASE_PORT: 5432
+    depends_on:
+      - boilerplate_database

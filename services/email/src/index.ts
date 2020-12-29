@@ -9,5 +9,5 @@ new Koa()
   .use(router.routes())
   .use(router.allowedMethods())
   .listen(config.port, () => {
-    logger.log('Server started.')
+    logger.log(`Listening on port ${ config.port }`)
   })

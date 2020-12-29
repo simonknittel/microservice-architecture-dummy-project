@@ -2,11 +2,11 @@
 
 class Logger {
   log(payload: any) {
-    console.log(JSON.stringify(payload))
+    console.log(payload)
   }
 
   error(payload: any) {
-    console.trace(JSON.stringify(payload))
+    console.trace(payload)
   }
 }
 

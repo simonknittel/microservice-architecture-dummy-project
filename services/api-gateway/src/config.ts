@@ -1,12 +1,6 @@
 // TODO: Integrate configuration service
 
 import { NormalizedRouteCollection, RateLimitConfig, Service, ServiceCollection, RouteCollection } from './global'
-import * as dotenv from 'dotenv'
-import * as path from 'path'
-
-dotenv.config({
-  path: path.resolve(__dirname, '../.env')
-})
 
 class Config {
   port: number
