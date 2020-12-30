@@ -23,7 +23,7 @@ class Config {
 
   userServiceHost: string
   emailServiceHost: string
-  apiGatewayServiceHost: string
+  serviceRegistryHost: string
 
   constructor() {
     this.refresh()
@@ -51,7 +51,7 @@ class Config {
 
       this.userServiceHost = process.env.USER_SERVICE_HOST,
       this.emailServiceHost = process.env.EMAIL_SERVICE_HOST,
-      this.apiGatewayServiceHost = process.env.API_GATEWAY_SERVICE_HOST,
+      this.serviceRegistryHost = process.env.SERVICE_REGISTRY_HOST,
 
       resolve()
     })

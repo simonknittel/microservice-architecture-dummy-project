@@ -1,7 +1,7 @@
 import './db'
 import * as bodyParser from 'koa-bodyparser'
 import * as Koa from 'koa'
-import apiGateway from './service-clients/api-gateway'
+import serviceRegistry from './service-clients/service-registry'
 import config from './config'
 import log from './middleware/log'
 import logger from './logger'
@@ -15,7 +15,7 @@ new Koa()
   .listen(config.port, () => {
     logger.log(`Listening on port ${ config.port }`)
 
-    if (config.apiGatewayServiceHost) apiGateway.register()
+    if (config.serviceRegistryHost) serviceRegistry.register()
   })
 
 process.on('exit', exitHandler)
@@ -26,5 +26,5 @@ process.on('uncaughtException', exitHandler)
 function exitHandler() {
   logger.log('Shutting down')
 
-  if (config.apiGatewayServiceHost) apiGateway.unregister()
+  if (config.serviceRegistryHost) serviceRegistry.unregister()
 }

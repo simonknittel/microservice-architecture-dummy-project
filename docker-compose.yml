@@ -34,7 +34,7 @@ services:
       DATABASE_PORT: 5432
       EMAIL_SERVICE_HOST: http://email_service:3000
       USER_SERVICE_HOST: http://user_service:3000
-      API_GATEWAY_SERVICE_HOST: http://api_gateway_service:3000
+      SERVICE_REGISTRY_HOST: http://api_gateway_service:3000
     depends_on:
       - authentication_database
       - user_service

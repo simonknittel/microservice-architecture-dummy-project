@@ -54,7 +54,7 @@ class Config {
       }
     }
 
-    console.log(`${ serviceKey } registered`)
+    console.log(`Service registration: ${ serviceKey }`)
   }
 
   unregisterService(serviceKey: string) {
@@ -65,7 +65,7 @@ class Config {
       delete this.routes[routeKey]
     }
 
-    console.log(`${ serviceKey } unregistered`)
+    console.log(`Service unregistration: ${ serviceKey }`)
   }
 }
 

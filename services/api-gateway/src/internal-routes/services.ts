@@ -4,7 +4,7 @@ import logger from '../logger'
 import getPath from '../shared/get-path'
 
 export function register(req: IncomingMessage, res: ServerResponse) {
-  return new Promise<void>((resolve, reject) => {
+  return new Promise<void>(resolve => {
     req.setEncoding('utf8')
     let rawData = ''
     req.on('data', chunk => { rawData += chunk })
@@ -37,6 +37,17 @@ export function unregister(req: IncomingMessage, res: ServerResponse) {
     config.unregisterService(serviceKey)
 
     res.statusCode = 202
+    res.end()
+    resolve()
+  })
+}
+
+export function heartbeat(req: IncomingMessage, res: ServerResponse) {
+  return new Promise<void>(resolve => {
+    const serviceKey = getPath(req).match(/\/internal\/services\/(.*)\/heartbeat/)[1]
+    // logger.log(`Service heartbeat: ${ serviceKey }`)
+
+    res.statusCode = 204
     res.end()
     resolve()
   })
