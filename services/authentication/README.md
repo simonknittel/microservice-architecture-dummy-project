@@ -25,3 +25,7 @@ Responsible for:
 
 - Connect to PostgreSQL `psql authentication_service authentication_service`
 - List all tables: `\dt`
+
+## TODO
+
+- Explore use of existing open source authentication services

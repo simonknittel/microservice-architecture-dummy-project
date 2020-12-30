@@ -13,7 +13,9 @@ export default function authentication(req: IM, res: ServerResponse) {
       try {
         req.user = jwt.verify(token, config.jwtSecret)
       } catch (error) {
-        logger.log(error)
+        if (['TokenExpiredError', 'JsonWebTokenError', 'NotBeforeError'].includes(error.name) === false) {
+          logger.error(error)
+        }
       }
     }
 
@@ -22,7 +24,7 @@ export default function authentication(req: IM, res: ServerResponse) {
     if (authenticationConfig.required === true && !req.user) {
       res.statusCode = 401
       res.end()
-      return reject()
+      return reject(false)
     }
 
     // if (authenticationConfig.strong === true) {
@@ -31,7 +33,7 @@ export default function authentication(req: IM, res: ServerResponse) {
     //   if (false) {
     //     res.statusCode = 401
     //     res.end()
-    //     return reject()
+    //     return reject(false)
     //   }
     // }
 

@@ -6,7 +6,7 @@ services:
     ports:
       - 9500:6379
 
-  api_gateway_service:
+  service:
     build: .
     ports:
       - 3000:3000

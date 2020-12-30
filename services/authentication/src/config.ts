@@ -1,9 +1,11 @@
 // TODO: Integrate configuration service
 
+import { Secret } from 'jsonwebtoken'
+
 class Config {
   port: number
 
-  jwtSecret: string
+  jwtSecret: Secret
   jwtAccessTokenLifetime: number
   jwtRefreshTokenLifetime: number
 
@@ -21,6 +23,7 @@ class Config {
 
   userServiceHost: string
   emailServiceHost: string
+  apiGatewayServiceHost: string
 
   constructor() {
     this.refresh()
@@ -48,6 +51,7 @@ class Config {
 
       this.userServiceHost = process.env.USER_SERVICE_HOST,
       this.emailServiceHost = process.env.EMAIL_SERVICE_HOST,
+      this.apiGatewayServiceHost = process.env.API_GATEWAY_SERVICE_HOST,
 
       resolve()
     })

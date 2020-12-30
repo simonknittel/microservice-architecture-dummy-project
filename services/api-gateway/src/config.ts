@@ -1,6 +1,7 @@
 // TODO: Integrate configuration service
 
 import { NormalizedRouteCollection, RateLimitConfig, Service, ServiceCollection, RouteCollection } from './global'
+import { Secret } from 'jsonwebtoken'
 
 class Config {
   port: number
@@ -14,7 +15,7 @@ class Config {
   services: ServiceCollection
   routes: NormalizedRouteCollection
 
-  jwtSecret: string
+  jwtSecret: Secret
 
   constructor() {
     this.refresh()
@@ -26,7 +27,7 @@ class Config {
 
       this.redisHost = process.env.REDIS_HOST
       this.redisPort = parseInt(process.env.REDIS_PORT)
-      this.redisPassword = process.env.REDITS_PASSWORD
+      this.redisPassword = process.env.REDIS_PASSWORD
 
       this.defaultRateLimit = {
         timeframe: 1000 * 60, // 1 minute
@@ -35,25 +36,6 @@ class Config {
 
       this.services = {}
       this.routes = {}
-
-      // TODO
-      this.registerService('authentication', {
-        host: 'authentication_service',
-        port: 3000,
-      }, {
-        '/jwt/login': {},
-        '/jwt/refresh': {},
-        '/logout': {},
-        '/request-password-reset': {},
-        '/set-password': {},
-        '/signup': {},
-        '/verify-email': {},
-        '/me': {
-          authentication: {
-            required: true
-          }
-        }
-      })
 
       this.jwtSecret = process.env.JWT_SECRET,
 
@@ -71,6 +53,19 @@ class Config {
         ...routeConfig
       }
     }
+
+    console.log(`${ serviceKey } registered`)
+  }
+
+  unregisterService(serviceKey: string) {
+    delete this.services[serviceKey]
+
+    for (const [routeKey, route] of Object.entries(this.routes)) {
+      if (route.serviceKey !== serviceKey) continue
+      delete this.routes[routeKey]
+    }
+
+    console.log(`${ serviceKey } unregistered`)
   }
 }
 
