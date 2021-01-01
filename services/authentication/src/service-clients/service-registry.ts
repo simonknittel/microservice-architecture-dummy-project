@@ -3,9 +3,6 @@ import config from '../config'
 import logger from '../logger'
 
 class ServiceRegistry {
-  registered: boolean
-  heartbeatInterval: NodeJS.Timeout
-
   register() {
     return new Promise<void>(resolve => {
       const postData: any = {}
@@ -13,8 +10,8 @@ class ServiceRegistry {
       postData.serviceKey = 'authentication'
 
       postData.config = {
-        host: 'authentication_service',
-        port: 3000
+        host: config.authenticationServiceHost,
+        port: config.port
       }
 
       postData.routes = {
@@ -49,7 +46,6 @@ class ServiceRegistry {
           return resolve()
         }
 
-        this.heartbeatInterval = setInterval(this.heartbeat, 5000)
         resolve()
       })
 
@@ -72,7 +68,6 @@ class ServiceRegistry {
 
       const req = http.request(`${ config.serviceRegistryHost }/internal/services/authentication`, options, res => {
         if (res.statusCode !== 202) return reject(res.statusCode)
-        clearInterval(this.heartbeatInterval)
         resolve()
       })
 
@@ -80,20 +75,6 @@ class ServiceRegistry {
 
       req.end()
     })
-  }
-
-  heartbeat() {
-    const options = {
-      method: 'get'
-    }
-
-    const req = http.request(`${ config.serviceRegistryHost }/internal/services/authentication/heartbeat`, options, res => {
-      if (res.statusCode !== 204) logger.error(res.statusCode)
-    })
-
-    req.on('error', error => logger.error(error))
-
-    req.end()
   }
 }
 

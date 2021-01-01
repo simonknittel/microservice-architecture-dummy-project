@@ -1,6 +1,6 @@
 // TODO: Integrate configuration service
 
-import { NormalizedRouteCollection, RateLimitConfig, Service, ServiceCollection, RouteCollection } from './global'
+import { RateLimitConfig } from './global'
 import { Secret } from 'jsonwebtoken'
 
 class Config {
@@ -12,9 +12,6 @@ class Config {
 
   defaultRateLimit: RateLimitConfig
 
-  services: ServiceCollection
-  routes: NormalizedRouteCollection
-
   jwtSecret: Secret
 
   constructor() {
@@ -23,10 +20,10 @@ class Config {
 
   refresh() {
     return new Promise<void>(resolve => {
-      this.port = parseInt(process.env.PORT)
+      this.port = parseInt(process.env.PORT) || 3000
 
-      this.redisHost = process.env.REDIS_HOST
-      this.redisPort = parseInt(process.env.REDIS_PORT)
+      this.redisHost = process.env.REDIS_HOST || 'localhost'
+      this.redisPort = parseInt(process.env.REDIS_PORT) || 6379
       this.redisPassword = process.env.REDIS_PASSWORD
 
       this.defaultRateLimit = {
@@ -34,38 +31,10 @@ class Config {
         count: 10,
       }
 
-      this.services = {}
-      this.routes = {}
-
       this.jwtSecret = process.env.JWT_SECRET,
 
       resolve()
     })
-  }
-
-  registerService(serviceKey: string, config: Service, routes: RouteCollection) {
-    this.services[serviceKey] = config
-
-    for (const [routeKey, routeConfig] of Object.entries(routes)) {
-      this.routes[routeKey] = {
-        serviceKey,
-        routeKey,
-        ...routeConfig
-      }
-    }
-
-    console.log(`Service registration: ${ serviceKey }`)
-  }
-
-  unregisterService(serviceKey: string) {
-    delete this.services[serviceKey]
-
-    for (const [routeKey, route] of Object.entries(this.routes)) {
-      if (route.serviceKey !== serviceKey) continue
-      delete this.routes[routeKey]
-    }
-
-    console.log(`Service unregistration: ${ serviceKey }`)
   }
 }
 

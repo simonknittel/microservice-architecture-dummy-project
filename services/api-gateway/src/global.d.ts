@@ -4,6 +4,8 @@ interface Service {
   host: string
   port: number
 
+  healthy: boolean
+
   rateLimit?: RateLimitConfig
   authentication?: AuthenticationConfig
 }
@@ -34,7 +36,6 @@ interface IM extends IncomingMessage {
 
 interface NormalizedRoute extends Route {
   serviceKey: string
-  routeKey: string
 }
 
 type NormalizedRouteCollection = Record<string, NormalizedRoute>

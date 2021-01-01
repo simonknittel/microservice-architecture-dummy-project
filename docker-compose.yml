@@ -32,6 +32,7 @@ services:
       PORT: 3000
       DATABASE_HOST: authentication_database
       DATABASE_PORT: 5432
+      AUTHENTICATION_SERVICE_HOST: authentication_service
       EMAIL_SERVICE_HOST: http://email_service:3000
       USER_SERVICE_HOST: http://user_service:3000
       SERVICE_REGISTRY_HOST: http://api_gateway_service:3000

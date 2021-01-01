@@ -1,7 +1,7 @@
-import { heartbeat, register, unregister } from '../internal-routes/services'
+import { register, unregister } from '../routes/services'
 import { ServerResponse, IncomingMessage } from 'http'
 import getPath from '../shared/get-path'
-import health from '../internal-routes/health'
+import health from '../routes/health'
 
 // TODO: Prevent requests from outside
 export default function internalRouter(req: IncomingMessage, res: ServerResponse) {
@@ -13,9 +13,6 @@ export default function internalRouter(req: IncomingMessage, res: ServerResponse
         .then(() => reject(false))
     } else if (path.indexOf('/internal/services/') === 0 && req.method === 'DELETE') {
       return unregister(req, res)
-        .then(() => reject(false))
-    } else if (path.match(/\/internal\/services\/(.*)\/heartbeat/) && req.method === 'GET') {
-      return heartbeat(req, res)
         .then(() => reject(false))
     } else if (path === '/internal/health' && req.method === 'GET') {
       return health(req, res)
