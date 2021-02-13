@@ -2,5 +2,5 @@
 
 ## Useful commands
 
-- Connect to PostgreSQL `psql authentication_service authentication_service`
+- Connect to PostgreSQL `psql boilerplate_service boilerplate_service`
 - List all tables: `\dt`

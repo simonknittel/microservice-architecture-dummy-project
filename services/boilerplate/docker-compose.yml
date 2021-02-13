@@ -10,7 +10,7 @@ services:
     ports:
       - 5432:5432
 
-  boilerplate_service:
+  service:
     build: .
     ports:
       - 3000:3000

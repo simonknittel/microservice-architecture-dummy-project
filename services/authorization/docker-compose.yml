@@ -1,0 +1,19 @@
+version: '3.9'
+
+services:
+  redis:
+    image: redis:6.0.9-alpine
+    ports:
+      - 9501:6379
+
+  service:
+    build: .
+    ports:
+      - 3004:3000
+    env_file: .env
+    environment:
+      PORT: 3000
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    depends_on:
+      - database
