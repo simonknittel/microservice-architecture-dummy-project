@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@koa/router": "10.0.0",
-    "knex": "0.21.14",
+    "knex": "0.21.15",
     "koa": "2.13.0",
     "koa-bodyparser": "4.3.0",
     "objection": "2.2.3",
