@@ -17,7 +17,7 @@ services:
       - authentication_service
 
   authentication_database:
-    image: postgres:13.1-alpine
+    image: postgres:13.2-alpine
     ports:
       - 9000:5432 # Exposed so we can run migrations via the Knex CLI
     environment:
@@ -48,7 +48,7 @@ services:
       PORT: 3000
 
   user_database:
-    image: postgres:13.1-alpine
+    image: postgres:13.2-alpine
     ports:
       - 9001:5432 # Exposed so we can run migrations via the Knex CLI
     environment:

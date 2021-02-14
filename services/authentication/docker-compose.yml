@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   database:
-    image: postgres:13.1-alpine
+    image: postgres:13.2-alpine
     environment:
       POSTGRES_USER: authentication_service
       POSTGRES_PASSWORD: authentication_service
