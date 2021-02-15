@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   redis:
-    image: redis:6.0.9-alpine
+    image: redis:6.0.10-alpine
     ports:
       - 9501:6379
 
