@@ -32,7 +32,7 @@
     "knex": "0.21.16",
     "koa": "2.13.0",
     "koa-bodyparser": "4.3.0",
-    "objection": "2.2.7",
+    "objection": "2.2.11",
     "pg": "8.5.1"
   }
 }
