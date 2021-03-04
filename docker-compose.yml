@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   api_gateway_redis:
-    image: redis:6.2.0-alpine
+    image: redis:6.2.1-alpine
 
   api_gateway_service:
     build: services/api-gateway/
