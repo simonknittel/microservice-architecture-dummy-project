@@ -30,7 +30,7 @@
   "dependencies": {
     "@koa/router": "10.0.0",
     "ioredis": "4.24.4",
-    "knex": "0.95.3",
+    "knex": "0.95.4",
     "koa": "2.13.1",
     "koa-bodyparser": "4.3.0"
   }
