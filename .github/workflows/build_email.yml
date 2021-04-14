@@ -25,15 +25,8 @@ jobs:
         tags: email:latest
         load: true
 
-    # - name: Scan container image
-    #   uses: anchore/scan-action@v2
-    #   id: scan
-    #   with:
-    #     image: "email:latest"
-    #     fail-build: true
-
     - name: Install grype
       run: curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b .
 
     - name: Run grype
-      run: ./grype --fail-on medium -o table email:latest
+      run: ./grype --fail-on medium email:latest
