@@ -1,0 +1,38 @@
+name: build_email
+
+on:
+  push:
+    paths:
+    - 'services/email/**'
+
+jobs:
+
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Build container image
+      uses: docker/build-push-action@v2
+      with:
+        context: services/email
+        tags: email:latest
+        load: true
+
+    - name: Scan container image
+      uses: anchore/scan-action@v2
+      id: scan
+      with:
+        image: "email:latest"
+        fail-build: true
+        acs-report-enable: true
+
+    - name: upload Anchore scan SARIF report
+      uses: github/codeql-action/upload-sarif@v1
+      with:
+        sarif_file: ${{ steps.scan.outputs.sarif }}
