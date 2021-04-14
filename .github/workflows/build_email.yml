@@ -30,7 +30,4 @@ jobs:
       id: scan
       with:
         image: "email:latest"
-        acs-report-enable: true
-
-    - name: grype scan JSON results
-      run: for j in `ls ${{ steps.scan.outputs.vulnerabilities }}`; do echo "---- ${j} ----"; cat ${j}; echo; done
+        fail-build: true
