@@ -29,7 +29,6 @@ jobs:
       id: scan
       with:
         image: "email:latest"
-        fail-build: true
         acs-report-enable: true
 
     - name: upload Anchore scan SARIF report
