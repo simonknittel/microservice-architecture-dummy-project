@@ -36,4 +36,4 @@ jobs:
       run: curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b .
 
     - name: Run grype
-      run: ./grype --fail-on -o table email:latest
+      run: ./grype --fail-on medium -o table email:latest
