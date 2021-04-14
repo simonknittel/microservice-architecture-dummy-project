@@ -4,6 +4,7 @@ on:
   push:
     paths:
     - 'services/email/**'
+    - '.github/workflows/build_email.yml'
 
 jobs:
 
@@ -32,4 +33,4 @@ jobs:
         acs-report-enable: true
 
     - name: grype scan JSON results
-      run: for j in `ls ./anchore-reports/*.json`; do echo "---- ${j} ----"; cat ${j}; echo; done
+      run: for j in `ls ${{ steps.scan.outputs.vulnerabilities }}`; do echo "---- ${j} ----"; cat ${j}; echo; done
