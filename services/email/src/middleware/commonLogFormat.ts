@@ -23,3 +23,5 @@ export default async function commonLogFormat(ctx: Context, next: Next) {
 
   logger.log(`${ ctx.request.ip } - - ${ date } "${ ctx.request.method } ${ ctx.request.url } ${ protocol }" ${ ctx.response.status } ${ bytes }`)
 }
+
+// trigger build
