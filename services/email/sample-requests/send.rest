@@ -1,0 +1,10 @@
+POST http://localhost:3002/send
+Content-Type: application/json
+
+{
+  "to": "",
+  "template": "emailverification",
+  "variables": {
+    "link": "foo"
+  }
+}
