@@ -31,3 +31,4 @@ jobs:
       with:
         image: "email:latest"
         fail-build: true
+        debug: false
