@@ -31,10 +31,8 @@ jobs:
         path: services/email/node_modules
         key: node-${{ hashFiles('services/email/package-lock.json', 'services/email/.nvmrc') }}
 
-    - run: echo "${{ steps.cache.outputs.cache-hit }}"
-
     - run: npm ci
-      if: steps.cache.outputs.cache-hit == 'false'
+      if: steps.cache.outputs.cache-hit != 'true'
 
     - run: npm test
 
