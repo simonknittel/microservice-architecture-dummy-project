@@ -1,29 +1,29 @@
 // TODO: Integrate configuration service
 
 class Config {
-  port: number
+	port: number
 
-  mailgunHost: string
-  mailgunDomain: string
-  mailgunKey: string
-  mailgunFrom: string
+	mailgunHost: string
+	mailgunDomain: string
+	mailgunKey: string
+	mailgunFrom: string
 
-  constructor() {
-    this.refresh()
-  }
+	constructor() {
+		this.refresh()
+	}
 
-  refresh() {
-    return new Promise<void>(resolve => {
-      this.port = parseInt(process.env.PORT) || 3000,
+	refresh() {
+		return new Promise<void>(resolve => {
+			this.port = parseInt(process.env.PORT) || 3000,
 
-      this.mailgunHost = process.env.MAILGUN_HOST,
-      this.mailgunDomain = process.env.MAILGUN_DOMAIN,
-      this.mailgunKey = process.env.MAILGUN_KEY,
-      this.mailgunFrom = process.env.MAILGUN_FROM,
+			this.mailgunHost = process.env.MAILGUN_HOST,
+			this.mailgunDomain = process.env.MAILGUN_DOMAIN,
+			this.mailgunKey = process.env.MAILGUN_KEY,
+			this.mailgunFrom = process.env.MAILGUN_FROM,
 
-      resolve()
-    })
-  }
+			resolve()
+		})
+	}
 }
 
 const config = new Config()
