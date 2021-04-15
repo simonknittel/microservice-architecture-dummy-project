@@ -1,7 +1,11 @@
 {
   "cSpell.words": [
+    "Buildx",
     "Knex",
     "POSTGRES",
+    "Snyk",
+    "grype",
+    "nvmrc",
     "psql",
     "signup",
     "uuidv"
