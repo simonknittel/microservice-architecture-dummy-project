@@ -42,7 +42,7 @@ jobs:
     - name: Build container image
       uses: docker/build-push-action@v2
       with:
-        context: .
+        context: services/email
         tags: email:latest
         load: true
 
