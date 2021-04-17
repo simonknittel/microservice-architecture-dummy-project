@@ -1,10 +1,14 @@
-name: build_email
+name: "Build email service"
 
 on:
+
   push:
     paths:
     - 'services/email/**'
     - '.github/workflows/build_email.yml'
+
+  schedule:
+    - cron: '24 4 * * 1'
 
 defaults:
   run:
@@ -30,37 +34,39 @@ jobs:
       with:
         path: services/email/node_modules
         key: node-${{ hashFiles('services/email/package-lock.json', 'services/email/.nvmrc') }}
-
     - run: npm ci
       if: steps.cache.outputs.cache-hit != 'true'
-
     - run: npm test
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
-
     - name: Build container image
       uses: docker/build-push-action@v2
       with:
         context: services/email
-        tags: email:latest
+        tags: image
         load: true
 
-    # - name: Run docker scan with Snyk
-    #   run: docker scan --accept-license email:latest
-
-    # - name: Install grype
-    #   run: curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b .
-    # - name: Run grype
-    #   run: ./grype --fail-on medium email:latest
+    - name: Run Snyk Container
+      continue-on-error: false
+      uses: snyk/actions/docker@master
+      continue-on-error: true
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        image: image
+        args: --file=Dockerfile
+    - name: Upload Snyk's SARIF to GitHub Code Scanning
+      uses: github/codeql-action/upload-sarif@v1
+      with:
+        sarif_file: snyk.sarif
 
     - uses: anchore/scan-action@v2
       id: scan
       with:
-        image: "email:latest"
+        image: "image"
         acs-report-enable: true
-
-    - name: Upload SARIF report
+    - name: Upload scan-action's SARIF to GitHub Code Scanning
       uses: github/codeql-action/upload-sarif@v1
       with:
         sarif_file: ${{ steps.scan.outputs.sarif }}
