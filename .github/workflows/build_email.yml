@@ -44,6 +44,8 @@ jobs:
       uses: snyk/actions/node@master
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        args: --file=services/email/package.json --file=services/email/package-lock.json
 
   docker:
     runs-on: ubuntu-20.04
