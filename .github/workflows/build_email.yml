@@ -48,7 +48,6 @@ jobs:
         load: true
 
     - name: Run Snyk Container
-      continue-on-error: false
       uses: snyk/actions/docker@master
       continue-on-error: true
       env:
