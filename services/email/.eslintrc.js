@@ -11,6 +11,7 @@ module.exports = {
 	rules: {
 		indent: ['error', 'tab'],
 		semi: ['error', 'never'],
-		quotes: ['error', 'single']
+		quotes: ['error', 'single'],
+		// 'import/extensions': ['error', 'always'] // I would like to have this, but TypeScript is not compatible (see https://github.com/Microsoft/TypeScript/issues/27481)
 	}
 }

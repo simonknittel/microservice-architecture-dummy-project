@@ -1,8 +1,8 @@
 import { Context, Next } from 'koa'
 import * as https from 'https'
+import * as querystring from 'querystring'
 import config from '../config'
 import logger from '../logger'
-import * as querystring from 'querystring'
 
 export default function send(ctx: Context, next: Next): Promise<void> {
 	return new Promise<void>((resolve, reject) => {
