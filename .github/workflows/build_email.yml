@@ -46,11 +46,21 @@ jobs:
         tags: email:latest
         load: true
 
-    - name: Install grype
-      run: curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b .
-
     # - name: Run docker scan with Snyk
     #   run: docker scan --accept-license email:latest
 
-    - name: Run grype
-      run: ./grype --fail-on medium email:latest
+    # - name: Install grype
+    #   run: curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b .
+    # - name: Run grype
+    #   run: ./grype --fail-on medium email:latest
+
+    - uses: anchore/scan-action@v2
+      id: scan
+      with:
+        image: "email:latest"
+        acs-report-enable: true
+
+    - name: Upload SARIF report
+      uses: github/codeql-action/upload-sarif@v1
+      with:
+        sarif_file: ${{ steps.scan.outputs.sarif }}
