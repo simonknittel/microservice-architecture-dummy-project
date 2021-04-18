@@ -5,7 +5,8 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "test": "eslint . || jest"
+    "test": "jest",
+    "lint": "eslint"
   },
   "author": "Simon Knittel (https://github.com/simonknittel)",
   "license": "MIT",

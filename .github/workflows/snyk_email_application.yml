@@ -1,0 +1,33 @@
+name: "Run Snyk against email service's application code"
+
+on:
+
+  push:
+    paths:
+    - 'services/email/**'
+    - '!services/email/Dockerfile'
+    - '!services/email/docker-compose.yml'
+    - '.github/workflows/snyk_email_application.yml'
+
+  schedule:
+    - cron: '24 4 * * 1'
+
+defaults:
+  run:
+    working-directory: services/email
+
+jobs:
+
+  snyk:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Run Snyk
+      uses: snyk/actions/node@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        args: --file=services/email/package.json

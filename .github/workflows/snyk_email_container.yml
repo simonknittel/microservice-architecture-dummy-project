@@ -1,11 +1,11 @@
-name: "Build and test email service's container image"
+name: "Run Snyk against email service's container image"
 
 on:
 
   push:
     paths:
     - 'services/email/Dockerfile'
-    - '.github/workflows/build_test_email_container.yml'
+    - '.github/workflows/snyk_email_container.yml'
 
   schedule:
     - cron: '24 4 * * 1'

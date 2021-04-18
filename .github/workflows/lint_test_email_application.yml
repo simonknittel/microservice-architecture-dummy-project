@@ -1,4 +1,4 @@
-name: "Build and test email service's application"
+name: "Lint and test email service's application"
 
 on:
 
@@ -7,10 +7,7 @@ on:
     - 'services/email/**'
     - '!services/email/Dockerfile'
     - '!services/email/docker-compose.yml'
-    - '.github/workflows/build_test_email_application.yml'
-
-  schedule:
-    - cron: '24 4 * * 1'
+    - '.github/workflows/lint_test_email_application.yml'
 
 defaults:
   run:
@@ -18,7 +15,31 @@ defaults:
 
 jobs:
 
-  build_test:
+  lint:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 14.16.0
+
+    - name: Cache node_modules
+      id: cache
+      uses: actions/cache@v2
+      with:
+        path: services/email/node_modules
+        key: node-${{ hashFiles('services/email/package-lock.json', 'services/email/.nvmrc') }}
+
+    - run: npm ci
+      if: steps.cache.outputs.cache-hit != 'true'
+
+    - run: npm run lint
+
+  test:
     runs-on: ubuntu-20.04
 
     steps:
@@ -41,17 +62,3 @@ jobs:
       if: steps.cache.outputs.cache-hit != 'true'
 
     - run: npm test
-
-    - uses: codecov/codecov-action@v1
-      with:
-        root_dir: services/email
-        # working-directory: services/email
-        flags: unittests
-        verbose: true
-
-    - name: Run Snyk
-      uses: snyk/actions/node@master
-      env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      with:
-        args: --file=services/email/package.json
