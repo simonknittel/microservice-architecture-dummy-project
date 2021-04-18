@@ -67,4 +67,3 @@ jobs:
       with:
         root_dir: services/email
         flags: unittests
-        verbose: true
