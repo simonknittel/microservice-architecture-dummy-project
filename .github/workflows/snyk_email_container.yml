@@ -16,7 +16,7 @@ defaults:
 
 jobs:
 
-  build_test:
+  snyk:
     runs-on: ubuntu-20.04
 
     steps:

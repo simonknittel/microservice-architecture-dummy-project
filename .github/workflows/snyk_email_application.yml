@@ -25,6 +25,21 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 14.16.0
+
+    - name: Cache node_modules
+      id: cache
+      uses: actions/cache@v2
+      with:
+        path: services/email/node_modules
+        key: node-${{ hashFiles('services/email/package-lock.json', 'services/email/.nvmrc') }}
+
+    - run: npm ci
+      if: steps.cache.outputs.cache-hit != 'true'
+
     - name: Run Snyk
       uses: snyk/actions/node@master
       env:
