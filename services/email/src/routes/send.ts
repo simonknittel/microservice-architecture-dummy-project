@@ -6,19 +6,10 @@ import logger from '../logger'
 
 export default function send(ctx: Context, next: Next): Promise<void> {
 	return new Promise<void>((resolve, reject) => {
+		const options = getOptions()
 		const data = getData(ctx)
 
-		const key = Buffer.from(`api:${ config.mailgunKey }`).toString('base64')
-
-		const req = https.request({
-			hostname: config.mailgunHost,
-			path: `/v3/${ config.mailgunDomain }/messages`,
-			method: 'POST',
-			headers: {
-				'Authorization': `Basic ${ key }`,
-				'Content-Type': 'application/x-www-form-urlencoded',
-			},
-		}, async (res) => {
+		const req = https.request(options, async (res) => {
 			if (res.statusCode >= 400) {
 				logger.error(res.statusCode)
 				ctx.response.status = 500
@@ -79,4 +70,18 @@ function getSubject(template: string) {
 	}
 
 	return subject
+}
+
+function getOptions() {
+	const key = Buffer.from(`api:${ config.mailgunKey }`).toString('base64')
+
+	return {
+		hostname: config.mailgunHost,
+		path: `/v3/${ config.mailgunDomain }/messages`,
+		method: 'POST',
+		headers: {
+			'Authorization': `Basic ${ key }`,
+			'Content-Type': 'application/x-www-form-urlencoded',
+		}
+	}
 }
