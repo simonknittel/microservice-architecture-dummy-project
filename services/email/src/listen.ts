@@ -3,11 +3,14 @@ import createApp from './app'
 import config from './config'
 import logger from './logger'
 
-export default function listen() {
-	const app = createApp()
+export default function listen(): void {
+	const requestListener = createApp().callback()
 
-	http.createServer(app.callback())
-		.listen(config.port, () => {
-			logger.log(`Worker ${ process.pid } listening on port ${ config.port }.`)
-		})
+	http
+		.createServer(requestListener)
+		.listen(config.port, listeningListener)
+}
+
+function listeningListener() {
+	logger.log(`Worker ${ process.pid } listening on port ${ config.port }.`)
 }

@@ -9,7 +9,7 @@ module.exports = {
 		'plugin:@typescript-eslint/recommended'
 	],
 	rules: {
-		indent: ['error', 'tab'],
+		indent: ['error', 'tab', { SwitchCase: 1 }],
 		semi: ['error', 'never'],
 		quotes: ['error', 'single'],
 		// 'import/extensions': ['error', 'always'] // I would like to have this, but TypeScript is not compatible (see https://github.com/Microsoft/TypeScript/issues/27481)
