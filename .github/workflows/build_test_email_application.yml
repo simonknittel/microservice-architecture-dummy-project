@@ -42,6 +42,13 @@ jobs:
 
     - run: npm test
 
+    - uses: codecov/codecov-action@v1
+      with:
+        root_dir: services/email
+        # working-directory: services/email
+        flags: unittests
+        verbose: true
+
     - name: Run Snyk
       uses: snyk/actions/node@master
       env:

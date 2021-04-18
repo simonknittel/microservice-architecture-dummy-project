@@ -5,7 +5,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "test": "eslint ."
+    "test": "eslint . || jest"
   },
   "author": "Simon Knittel (https://github.com/simonknittel)",
   "license": "MIT",
@@ -19,12 +19,15 @@
     "node": "14.16.0"
   },
   "devDependencies": {
+    "@types/jest": "26.0.22",
     "@types/koa": "2.13.1",
     "@types/koa-bodyparser": "4.3.0",
     "@types/koa__router": "8.0.4",
     "@typescript-eslint/eslint-plugin": "4.22.0",
     "@typescript-eslint/parser": "4.22.0",
     "eslint": "7.24.0",
+    "jest": "26.6.3",
+    "ts-jest": "26.5.5",
     "typescript": "4.2.3"
   },
   "dependencies": {
