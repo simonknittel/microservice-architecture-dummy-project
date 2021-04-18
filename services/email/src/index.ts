@@ -1,7 +1,7 @@
 import * as cluster from 'cluster'
 import * as os from 'os'
-import createApp from './app'
 import logger from './logger'
+import listen from './listen'
 
 if (cluster.isMaster) {
 	logger.log(`Master ${ process.pid } is running.`)
@@ -14,5 +14,5 @@ if (cluster.isMaster) {
 		logger.log(`Worker ${ worker.process.pid } died.`)
 	})
 } else {
-	createApp()
+	listen()
 }
