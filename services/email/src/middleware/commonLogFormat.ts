@@ -13,9 +13,9 @@ export default function commongLogFormat({
 		const day = now.getUTCDate()
 		const month = new Intl.DateTimeFormat('en-US', { month: 'short' }).format(now)
 		const year = now.getUTCFullYear()
-		const hours = now.getUTCHours() > 9 ? now.getUTCHours() : `0${ now.getUTCHours() }`
-		const minutes = now.getUTCMinutes() > 9 ? now.getUTCMinutes() : `0${ now.getUTCMinutes() }`
-		const seconds = now.getUTCSeconds() > 9 ? now.getUTCSeconds() : `0${ now.getUTCSeconds() }`
+		const hours = now.getUTCHours().toString().padStart(2, '0')
+		const minutes = now.getUTCMinutes().toString().padStart(2, '0')
+		const seconds = now.getUTCSeconds().toString().padStart(2, '0')
 		const tz = '+0000'
 		const date = `[${ day }/${ month }/${ year }:${ hours }:${ minutes }:${ seconds } ${ tz }]`
 
