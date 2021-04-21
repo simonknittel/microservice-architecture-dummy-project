@@ -6,9 +6,7 @@ import logger from '../logger'
 
 export default async function send(ctx: Context, next: Next): Promise<void> {
 	try {
-		const options = getOptions()
-		const data = getData(ctx.request)
-		await request(options, data)
+		await sendRequest(ctx.request)
 		ctx.response.status = 204
 	} catch (error) {
 		ctx.response.status = 500
@@ -18,7 +16,10 @@ export default async function send(ctx: Context, next: Next): Promise<void> {
 	await next()
 }
 
-function request(options: https.RequestOptions, data: string) {
+function sendRequest(request: Request) {
+	const options = getOptions()
+	const data = getData(request)
+
 	return new Promise<void>((resolve, reject) => {
 		const req = https.request(options)
 

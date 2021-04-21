@@ -1,5 +1,4 @@
-import { Next } from 'koa'
-import { Context } from 'koa'
+import { Context, Next } from 'koa'
 import config from '../config'
 import EmailVerificationToken from '../models/email-verification-token'
 import userServiceClient from '../service-clients/user'

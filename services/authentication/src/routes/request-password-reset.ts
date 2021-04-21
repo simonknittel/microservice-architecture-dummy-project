@@ -1,5 +1,4 @@
-import { Next } from 'koa';
-import { Context } from 'koa';
+import { Context, Next } from 'koa';
 import logger from '../logger';
 import userServiceClient from '../service-clients/user';
 import {v4 as uuidv4} from 'uuid'

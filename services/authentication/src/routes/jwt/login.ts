@@ -25,7 +25,7 @@ export default async function login(ctx: Context, next: Next) {
     const user = await userServiceClient.get({ username, email })
 
     const result = await comparePasswords(password, user.password)
-    if (!result) throw ''
+    if (!result) throw new Error('')
 
     // TODO: Check if user is allowed to login
     // TODO: Check if 2fa is required
