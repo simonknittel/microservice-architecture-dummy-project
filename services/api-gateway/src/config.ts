@@ -31,7 +31,7 @@ class Config {
         count: 10,
       }
 
-      this.jwtSecret = process.env.JWT_SECRET,
+      this.jwtSecret = process.env.JWT_SECRET
 
       resolve()
     })
