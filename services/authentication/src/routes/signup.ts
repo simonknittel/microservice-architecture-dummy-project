@@ -10,7 +10,7 @@ import config from '../config'
 export default async function(ctx: Context, next: Next) {
   if (config.signupEnabled === false) {
     ctx.response.status = 403
-    return await next()
+    return next()
   }
 
   const username = ctx.request.body.username?.trim()
@@ -19,7 +19,7 @@ export default async function(ctx: Context, next: Next) {
 
   if ((!username && !email) || !password) {
     ctx.response.status = 400
-    return await next()
+    return next()
   }
 
   // TODO: Verify minimum password requirements
@@ -44,19 +44,19 @@ export default async function(ctx: Context, next: Next) {
     }
 
     ctx.response.status = 204
-    return await next()
+    return next()
   } catch (error) {
     if (error === 409) { // Prevent information disclosure if user already exists
       ctx.response.status = 400
-      return await next()
+      return next()
     } else if (error >= 400 && error < 500) {
       logger.error(error)
       ctx.response.status = 400
-      return await next()
+      return next()
     } else {
       logger.error(error)
       ctx.response.status = 500
-      return await next()
+      return next()
     }
   }
 }

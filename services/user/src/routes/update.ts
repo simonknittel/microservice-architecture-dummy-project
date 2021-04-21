@@ -10,12 +10,12 @@ export default async function update(ctx: Context, next: Next) {
 
   if (!userId) {
     ctx.response.status = 400
-    return await next()
+    return next()
   }
 
   if (!username && !email && !password && !(emailVerified === true || emailVerified === false)) {
     ctx.response.status = 400
-    return await next()
+    return next()
   }
 
   try {
@@ -31,9 +31,9 @@ export default async function update(ctx: Context, next: Next) {
     await User.query().where({ id: userId }).patch(patch)
 
     ctx.response.status = 204
-    return await next()
+    return next()
   } catch (error) {
     ctx.response.status = 500
-    return await next()
+    return next()
   }
 }

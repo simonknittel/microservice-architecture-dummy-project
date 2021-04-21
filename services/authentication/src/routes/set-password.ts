@@ -14,12 +14,12 @@ export default async function setPassword(ctx: Context, next: Next) {
 
   if (!token || !newPassword || !newPasswordRepeated) {
     ctx.response.status = 400
-    return await next()
+    return next()
   }
 
   if (newPassword !== newPasswordRepeated) {
     ctx.response.status = 400
-    return await next()
+    return next()
   }
 
   // TODO: Verify minimum password requirements
@@ -28,7 +28,7 @@ export default async function setPassword(ctx: Context, next: Next) {
     const foundTokens = await PasswordResetToken.query().where({ token })
     if (foundTokens.length === 0) {
       ctx.response.status = 400
-      return await next()
+      return next()
     }
 
     const foundToken = foundTokens[0]
@@ -37,7 +37,7 @@ export default async function setPassword(ctx: Context, next: Next) {
     if (Date.now() - foundToken.created_at > config.passwordResetTokenMaxAge) {
       await PasswordResetToken.query().where({ id: foundToken.id }).delete()
       ctx.response.status = 400
-      return await next()
+      return next()
     }
 
     // Save new password to database
@@ -55,10 +55,10 @@ export default async function setPassword(ctx: Context, next: Next) {
     await emailServiceClient.send(user.email, 'newpassword')
 
     ctx.response.status = 204
-    return await next()
+    return next()
   } catch (error) {
     logger.error(error)
     ctx.response.status = 500
-    return await next()
+    return next()
   }
 }

@@ -8,7 +8,7 @@ export default async function refresh(ctx: Context, next: Next) {
 
   if (!refreshToken) {
     ctx.response.status = 400
-    return await next()
+    return next()
   }
 
   try {

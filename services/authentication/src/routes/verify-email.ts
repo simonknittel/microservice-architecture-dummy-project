@@ -9,14 +9,14 @@ export default async function verifyEmail(ctx: Context, next: Next) {
 
   if (!token) {
     ctx.response.status = 400
-    return await next()
+    return next()
   }
 
   try {
     const foundTokens = await EmailVerificationToken.query().where({ token })
     if (foundTokens.length === 0) {
       ctx.response.status = 400
-      return await next()
+      return next()
     }
 
     const foundToken = foundTokens[0]
@@ -27,7 +27,7 @@ export default async function verifyEmail(ctx: Context, next: Next) {
       await EmailVerificationToken.query().where({ id: foundToken.id }).delete()
 
       ctx.response.status = 400
-      return await next()
+      return next()
     }
 
     // Save email verification to database
@@ -38,9 +38,9 @@ export default async function verifyEmail(ctx: Context, next: Next) {
     await EmailVerificationToken.query().where({ user_id: foundToken.user_id }).delete()
 
     ctx.response.status = 204
-    return await next()
+    return next()
   } catch (error) {
     ctx.response.status = 500
-    return await next()
+    return next()
   }
 }

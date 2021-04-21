@@ -7,7 +7,7 @@ export default async function(ctx: Context, next: Next) {
 
   if (!userId) {
     ctx.response.status = 400
-    return await next()
+    return next()
   }
 
   const redisKey = userId
@@ -33,11 +33,11 @@ export default async function(ctx: Context, next: Next) {
     }
 
     ctx.response.status = 200
-    return await next()
+    return next()
 
   } catch (error) {
     logger.error(error)
     ctx.response.status = 500
-    return await next()
+    return next()
   }
 }

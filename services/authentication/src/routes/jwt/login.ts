@@ -9,7 +9,7 @@ import config from '../../config'
 export default async function login(ctx: Context, next: Next) {
   if (config.loginEnabled === false) {
     ctx.response.status = 403
-    return await next()
+    return next()
   }
 
   const username = ctx.request.body.username?.trim()
@@ -18,7 +18,7 @@ export default async function login(ctx: Context, next: Next) {
 
   if ((!username && !email) || !password) {
     ctx.response.status = 400
-    return await next()
+    return next()
   }
 
   try {

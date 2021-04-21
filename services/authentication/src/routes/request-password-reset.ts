@@ -11,7 +11,7 @@ export default async function requestPasswordReset(ctx: Context, next: Next) {
 
   if (!email) {
     ctx.response.status = 400
-    return await next()
+    return next()
   }
 
   try {
@@ -23,7 +23,7 @@ export default async function requestPasswordReset(ctx: Context, next: Next) {
      */
     if (!foundUser) {
       ctx.respone.status = 204
-      return await next()
+      return next()
     }
 
     const token = uuidv4()
@@ -41,10 +41,10 @@ export default async function requestPasswordReset(ctx: Context, next: Next) {
     await emailServiceClient.send(email, 'passwordreset', { link: token })
 
     ctx.response.status = 204
-    return await next()
+    return next()
   } catch (error) {
     logger.error(error)
     ctx.response.status = 500
-    return await next()
+    return next()
   }
 }
