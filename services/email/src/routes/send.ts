@@ -1,33 +1,33 @@
-import { Context, Next } from 'koa'
+import { Context, Next, Request } from 'koa'
 import * as https from 'https'
 import * as querystring from 'querystring'
 import config from '../config'
 import logger from '../logger'
 
-export default function send(ctx: Context, next: Next): Promise<void> {
-	return new Promise<void>((resolve, reject) => {
+export default async function send(ctx: Context, next: Next): Promise<void> {
+	try {
 		const options = getOptions()
-		const data = getData(ctx)
+		const data = getData(ctx.request)
+		await request(options, data)
+		ctx.response.status = 204
+	} catch (error) {
+		ctx.response.status = 500
+		logger.error(error)
+	}
 
-		const req = https.request(options, async (res) => {
-			if (res.statusCode >= 400) {
-				logger.error(res.statusCode)
-				ctx.response.status = 500
-				await next()
-				return reject()
-			}
+	await next()
+}
 
-			ctx.response.status = 204
-			await next()
+function request(options: https.RequestOptions, data: string) {
+	return new Promise<void>((resolve, reject) => {
+		const req = https.request(options)
+
+		req.on('response', res => {
+			if (res.statusCode >= 400) return reject(res.statusCode)
 			return resolve()
 		})
 
-		req.on('error', async error => {
-			logger.error(error)
-			ctx.response.status = 500
-			await next()
-			return reject()
-		})
+		req.on('error', reject)
 
 		req.write(data)
 
@@ -35,11 +35,25 @@ export default function send(ctx: Context, next: Next): Promise<void> {
 	})
 }
 
-function getData(ctx: Context) {
-	const from = ctx.request.body.from?.trim()
-	const to = ctx.request.body.to?.trim()
-	const template = ctx.request.body.template?.trim()
-	const variables = ctx.request.body.variables
+function getOptions() {
+	const key = Buffer.from(`api:${ config.mailgunKey }`).toString('base64')
+
+	return {
+		hostname: config.mailgunHost,
+		path: `/v3/${ config.mailgunDomain }/messages`,
+		method: 'POST',
+		headers: {
+			'Authorization': `Basic ${ key }`,
+			'Content-Type': 'application/x-www-form-urlencoded',
+		}
+	}
+}
+
+function getData(request: Request) {
+	const from = request.body.from?.trim()
+	const to = request.body.to?.trim()
+	const template = request.body.template?.trim()
+	const variables = request.body.variables
 
 	const subject = getSubject(template)
 
@@ -70,18 +84,4 @@ function getSubject(template: string) {
 	}
 
 	return subject
-}
-
-function getOptions() {
-	const key = Buffer.from(`api:${ config.mailgunKey }`).toString('base64')
-
-	return {
-		hostname: config.mailgunHost,
-		path: `/v3/${ config.mailgunDomain }/messages`,
-		method: 'POST',
-		headers: {
-			'Authorization': `Basic ${ key }`,
-			'Content-Type': 'application/x-www-form-urlencoded',
-		}
-	}
 }
