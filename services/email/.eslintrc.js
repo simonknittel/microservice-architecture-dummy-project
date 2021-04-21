@@ -2,11 +2,13 @@
 module.exports = {
 	parser: '@typescript-eslint/parser',
 	plugins: [
-		'@typescript-eslint'
+		'@typescript-eslint',
+		'security-node'
 	],
 	extends: [
 		'eslint:recommended',
-		'plugin:@typescript-eslint/recommended'
+		'plugin:@typescript-eslint/recommended',
+		'plugin:security-node/recommended'
 	],
 	rules: {
 		indent: ['error', 'tab', { SwitchCase: 1 }],
