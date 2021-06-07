@@ -1,4 +1,4 @@
-FROM node:14.16.1-alpine3.12 AS builder
+FROM node:14.17.0-alpine3.12 AS builder
 WORKDIR /app
 COPY ["package.json", "package-lock.json", "tsconfig.json", "./"]
 COPY ["src", "./src"]
@@ -11,7 +11,7 @@ RUN npm ci && \
 ENV NODE_ENV=production
 RUN npm ci
 
-FROM node:14.16.1-alpine3.12
+FROM node:14.17.0-alpine3.12
 ENV NODE_ENV=production
 RUN rm -rf /usr/local/lib/node_modules/ /usr/local/bin/npm /usr/local/bin/npx
 COPY --from=builder ["/app/package.json", "/app/package-lock.json", "./app/"]
