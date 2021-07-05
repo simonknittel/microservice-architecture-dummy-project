@@ -16,7 +16,7 @@
     "directory": "services/api-gateway"
   },
   "engines": {
-    "node": "14.17.1"
+    "node": "14.17.2"
   },
   "devDependencies": {
     "@types/ioredis": "4.26.4",
