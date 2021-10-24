@@ -31,7 +31,7 @@
     "eslint-plugin-security-node": "1.0.14",
     "jest": "27.0.6",
     "supertest": "6.1.6",
-    "ts-jest": "27.0.4",
+    "ts-jest": "27.0.7",
     "typescript": "4.3.5"
   },
   "dependencies": {
