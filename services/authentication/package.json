@@ -37,7 +37,7 @@
     "knex": "0.95.15",
     "koa": "2.13.1",
     "koa-bodyparser": "4.3.0",
-    "objection": "2.2.15",
+    "objection": "2.2.18",
     "pg": "8.6.0",
     "uuid": "8.3.2"
   }
