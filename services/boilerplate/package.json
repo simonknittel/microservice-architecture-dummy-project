@@ -28,7 +28,7 @@
     "typescript": "4.3.5"
   },
   "dependencies": {
-    "@koa/router": "10.0.0",
+    "@koa/router": "10.1.1",
     "knex": "0.95.15",
     "koa": "2.13.1",
     "koa-bodyparser": "4.3.0",
