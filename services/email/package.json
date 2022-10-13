@@ -17,7 +17,7 @@
     "directory": "services/email"
   },
   "engines": {
-    "node": "14.17.3"
+    "node": "16.13.2"
   },
   "devDependencies": {
     "@types/jest": "26.0.24",
